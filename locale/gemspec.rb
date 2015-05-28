@@ -1,2 +1,2 @@
 # Matches foreman_softlayer.gemspec
-_('TODO: Description of ForemanSoftlayer.')
+_('Provision and manage Softlayer resources from Foreman.')

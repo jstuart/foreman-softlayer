@@ -8,4 +8,8 @@ class ForemanSoftlayerTest < ActiveSupport::TestCase
   test 'the truth' do
     assert true
   end
+
+  test 'truth' do
+    assert_kind_of Module, ForemanSoftlayer
+  end
 end
