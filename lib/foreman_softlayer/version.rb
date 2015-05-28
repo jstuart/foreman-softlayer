@@ -1,0 +1,3 @@
+module ForemanSoftlayer
+  VERSION = '0.0.1'
+end
