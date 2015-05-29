@@ -5,16 +5,12 @@ module ForemanSoftlayer
     
     before_create :test_connection
 
-    def self.provider_friendly_name
-      "Softlayer"
-    end
-
     def to_label
       "#{name} (#{provider_friendly_name})"
     end
-
+    
     def provided_attributes
-      super.merge({ :uuid => :id, :ip => :private_ip_address })
+      super.merge({ :uuid => :identity_to_s, :ip => :private_ip_address })
     end
 
     def self.model_name
@@ -77,9 +73,13 @@ module ForemanSoftlayer
     def update_required?(old_attrs, new_attrs)
       false
     end
+    
+    def self.provider_friendly_name
+      "Softlayer"
+    end
 
     def associated_host(vm)
-      Host.authorized(:view_hosts, Host).where(:ip => [vm.private_ip_address, vm.public_ip_address]).first
+      associate_by("ip", [vm.public_ip_address, vm.private_ip_address])
     end
 
     def user_data_supported?
