@@ -82,7 +82,10 @@ module ForemanSoftlayer
     # Load fog extensions
     require 'fog/softlayer'
     require 'fog/softlayer/models/compute/server'
+    require 'fog/softlayer/models/compute/servers'
     require File.expand_path('../../../app/models/concerns/fog_extensions/softlayer/server', __FILE__)
+    require File.expand_path('../../../app/models/concerns/fog_extensions/softlayer/servers', __FILE__)
     Fog::Compute::Softlayer::Server.send(:include, FogExtensions::Softlayer::Server)
+    Fog::Compute::Softlayer::Servers.send(:include, FogExtensions::Softlayer::Servers)
   end
 end
