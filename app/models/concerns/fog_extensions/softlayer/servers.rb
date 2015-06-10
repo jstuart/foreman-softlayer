@@ -21,16 +21,33 @@ module FogExtensions
       end
       
       def create(attributes = {})
-        super(convert_vlan(attributes))
+        # The commented code below will handle the conversion of an array of selected
+        # key pair IDs into an array of actual keypairs.  It also breaks the ability to 
+        # add key pairs on create.
+        #
+        #if (attributes.key?('key_pairs') && attributes['key_pairs'].is_a?(Array))
+        #  # Resolve the key pairs in the array
+        #  kp_array = []
+        #  attributes['key_pairs'].map { |id|
+        #    if (id && id.is_a?(String) && '' != id)
+        #      kp = service.key_pairs.get(id)
+        #      if (nil != kp)
+        #        kp_array.push(kp)
+        #        end
+        #    end
+        #  }
+        #  attributes['key_pairs'] = kp_array
+        #end
+        super(convert_attrs(attributes))
       end
       
       def new(attributes = {})
-        super(convert_vlan(attributes))
+        super(convert_attrs(attributes))
       end
       
       private
       
-      def convert_vlan(attributes = {})
+      def convert_attrs(attributes = {})
         if attributes && attributes.is_a?(Hash)
           attributes.each { |k,v|
             # Modify vlan attrs

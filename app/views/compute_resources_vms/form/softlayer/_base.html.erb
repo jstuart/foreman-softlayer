@@ -1,33 +1,47 @@
 
-<%# Is this an hourly image %>
+<%# Is this an hourly image -%>
 <%= checkbox_f f, :hourly_billing_flag, {:label => _('Hourly image?'), :help_inline => _("Checking this box will cause this server to be provisioned for hourly billing.  Leaving it unchecked will provision the server for an entire month.")} %>
 
-<%# What data center should this be provisioned to? %>
+<%# What data center should this be provisioned to? -%>
 <%= selectable_f f, :datacenter, compute_resource.vm_opts_datacenters, {}, :label => _('Datacenter') %>
 
-<%# What OS should be provisioned? %>
+<%# What OS should be provisioned? -%>
 <%= selectable_f f, :prov_os_code, compute_resource.vm_opts_os, {}, :label => _('Operating System') %>
 
-<%# CPU %>
+<%# CPU -%>
 <%= selectable_f f, :cpu, compute_resource.vm_opts_cpu, {}, :label => _('Processors') %>
 
-<%# Memory %>
+<%# Memory -%>
 <%= selectable_f f, :ram, compute_resource.vm_opts_memory, {}, :label => _('Memory') %>
 
-<%# Use local storage? %>
+<%# Use local storage? -%>
 <%= checkbox_f f, :ephemeral_storage, {:label => _('Use local storage?'), :help_inline => _("Checking this box will cause storage to be provisioned on the hypervisor instead of the SAN.")} %>
 
-<%# Disk 0 %>
-<%= selectable_f f, :disk, compute_resource.vm_opts_disk_0, {}, :label => _('Disk 1') %>
+<%# Disk 0 -%>
+<%= selectable_f f, :prov_disk_0, compute_resource.vm_opts_disk_0, {}, :label => _('Disk 1') %>
 
-<%# Disk 1 %>
-<%= selectable_f f, :disk, compute_resource.vm_opts_disk_1, {:include_blank => _("None")}, :label => _('Disk 2') %>
+<%# Disk 1 is reserved for swap -%>
 
-<%# Private network only? %>
+<%# Disk 2 -%>
+<%= selectable_f f, :prov_disk_2, compute_resource.vm_opts_disk_2, {:include_blank => _("None")}, :label => _('Disk 2') %>
+
+<%# Private network only? -%>
 <%= checkbox_f f, :private_network_only, {:label => _('Private network only?'), :help_inline => _("Checking this box will provision only the private network.  Leaving it unchecked will provision both public and private network interfaces.")} %>
 
+<%# Private VLAN - Could later be expanded to subnet as well -%>
 <%= select_f f, :private_vlan, compute_resource.private_vlans, :id, :name, {}, :label => _('Private VLAN') %>
 
 <%= select_f f, :vlan, compute_resource.public_vlans, :id, :name, {:include_blank => _("None")}, :label => _('Public VLAN') %>
 
 <%= selectable_f f, :prov_network_speed, compute_resource.vm_opts_net, {}, :label => _('Network Speed') %>
+
+<%# This should really be selectable, but it causes type issues through the fog-softlayer stack that I don't want to deal with at the moment. -%>
+<%# select_f f, :key_pairs, compute_resource.all_key_pairs, :id, :label, {}, {:label => _('Key Pairs'), :multiple => true} %>
+
+<%# Use Image? -%>
+<%= checkbox_f f, :use_image, {:label => _('Use an Image?'), :help_inline => _("Checking this box will use the OS image selected below instead of the base OS selected above.  Note that you MUST select an image even if you don't check this box because the username defined by the image will be used during provisioning.")} %>
+<%
+   arch ||= nil ; os ||= nil
+   images = possible_images(compute_resource, arch, os)
+%>
+<div id='image_selection'><%= select_f f, :image_id, images, :uuid, :name,{:include_blank => (images.empty? || images.size == 1) ? false : _('Please select an image')}, {:disabled => images.empty?, :label => _('Image')} %></div>
