@@ -131,11 +131,14 @@ module ForemanSoftlayer
             args.delete('prov_disk_0')
           end
           
-          if (args.key?('prov_disk_2'))
-            if ('' != args['prov_disk_2'])
-              args['disk'].push({'device' => 2, 'diskImage' => {'capacity' => args['prov_disk_2'].to_i}})
+          for i in 2..5
+            dk = "prov_disk_#{i}"
+            if (args.key?(dk))
+              if ('' != args[dk])
+                args['disk'].push({'device' => i, 'diskImage' => {'capacity' => args[dk].to_i}})
+              end
+              args.delete(dk)
             end
-            args.delete('prov_disk_2')
           end
         else
           # FIXME die here?

@@ -9,6 +9,9 @@ module FogExtensions
       attr_accessor :prov_disk_0
       # Disk 1 is always swap
       attr_accessor :prov_disk_2
+      attr_accessor :prov_disk_3
+      attr_accessor :prov_disk_4
+      attr_accessor :prov_disk_5
       
       # Do some magic to ditch the Server#vlan method which doesn't work right
       def self.append_features(mod)
@@ -73,6 +76,18 @@ module FogExtensions
       
       def prov_disk_2
         @disk_prov_2 ||= get_prov_disk_size(2)
+      end
+      
+      def prov_disk_3
+        @disk_prov_3 ||= get_prov_disk_size(3)
+      end
+      
+      def prov_disk_4
+        @disk_prov_4 ||= get_prov_disk_size(4)
+      end
+      
+      def prov_disk_5
+        @disk_prov_5 ||= get_prov_disk_size(5)
       end
 
       def ip_addresses
