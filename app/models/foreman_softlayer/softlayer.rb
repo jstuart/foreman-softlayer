@@ -243,6 +243,30 @@ module ForemanSoftlayer
       }.uniq.sort
     end
     
+    def vm_opts_disk_3
+      @vm_opts_disk_3 ||= vm_create_opts['blockDevices'].select { |item|
+        item['template']['blockDevices'].first['device'] == '3'
+      }.map { |item|
+        item['template']['blockDevices'].first['diskImage']['capacity']
+      }.uniq.sort
+    end
+    
+    def vm_opts_disk_4
+      @vm_opts_disk_4 ||= vm_create_opts['blockDevices'].select { |item|
+        item['template']['blockDevices'].first['device'] == '4'
+      }.map { |item|
+        item['template']['blockDevices'].first['diskImage']['capacity']
+      }.uniq.sort
+    end
+    
+    def vm_opts_disk_5
+      @vm_opts_disk_5 ||= vm_create_opts['blockDevices'].select { |item|
+        item['template']['blockDevices'].first['device'] == '5'
+      }.map { |item|
+        item['template']['blockDevices'].first['diskImage']['capacity']
+      }.uniq.sort
+    end
+    
     def vm_opts_memory
       @vm_opts_memory ||= vm_create_opts['memory'].map { |item|
         item['template']['maxMemory']
