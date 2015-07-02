@@ -26,13 +26,13 @@
 <%= selectable_f f, :prov_disk_2, compute_resource.vm_opts_disk_2, {:include_blank => _("None")}, :label => _('Disk 2') %>
 
 <%# Disk 3 -%>
-<%= selectable_f f, :prov_disk_2, compute_resource.vm_opts_disk_3, {:include_blank => _("None")}, :label => _('Disk 3') %>
+<%= selectable_f f, :prov_disk_3, compute_resource.vm_opts_disk_3, {:include_blank => _("None")}, :label => _('Disk 3') %>
 
 <%# Disk 4 -%>
-<%= selectable_f f, :prov_disk_2, compute_resource.vm_opts_disk_4, {:include_blank => _("None")}, :label => _('Disk 4') %>
+<%= selectable_f f, :prov_disk_4, compute_resource.vm_opts_disk_4, {:include_blank => _("None")}, :label => _('Disk 4') %>
 
 <%# Disk 5 -%>
-<%= selectable_f f, :prov_disk_2, compute_resource.vm_opts_disk_5, {:include_blank => _("None")}, :label => _('Disk 5') %>
+<%= selectable_f f, :prov_disk_5, compute_resource.vm_opts_disk_5, {:include_blank => _("None")}, :label => _('Disk 5') %>
 
 <%# Private network only? -%>
 <%= checkbox_f f, :private_network_only, {:label => _('Private network only?'), :help_inline => _("Checking this box will provision only the private network.  Leaving it unchecked will provision both public and private network interfaces.")} %>
